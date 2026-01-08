@@ -9,8 +9,8 @@ import { HoverAnimation, FloatingAnimation } from "@/components/hover-animations
 import Image from "next/image"
 import { useState, useEffect } from "react"
 
-// Componente para renderizar o Elfsight apenas no cliente
-function ElfsightReviews() {
+// Componente para renderizar os widgets do Elfsight apenas no cliente
+function ElfsightIntegration() {
   const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
@@ -34,14 +34,15 @@ function ElfsightReviews() {
   if (!isClient) {
     return (
       <div className="w-full h-64 bg-[#FEE1CB] rounded-lg flex items-center justify-center">
-        <p className="text-[#371c13]">Carregando avaliações...</p>
+        <p className="text-[#371c13]">Carregando conteúdo...</p>
       </div>
     )
   }
 
   return (
-    <div className="w-full">
-      <div className="elfsight-app-9e6596e4-ce5e-4e11-ae38-9c5c28f0a416" data-elfsight-app-lazy></div>
+    <div className="flex flex-col gap-8 w-full">
+      <div className="elfsight-app-e5203ce8-0504-4557-8ca9-11ef4568f042" data-elfsight-app-lazy></div>
+      <div className="elfsight-app-a1170993-c665-4d8e-9001-516b5cedb2ee" data-elfsight-app-lazy></div>
     </div>
   )
 }
@@ -253,7 +254,7 @@ export default function HomePage() {
           </SmartScrollAnimation>
 
           <SmartScrollAnimation direction="up" delay={0.2}>
-            <ElfsightReviews />
+            <ElfsightIntegration />
           </SmartScrollAnimation>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
