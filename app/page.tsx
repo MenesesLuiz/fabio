@@ -7,42 +7,55 @@ import { MessageCircle, Instagram, Star, CheckCircle, Award, Users, Clock, Shiel
 import { SmartScrollAnimation, SmartStaggeredAnimation } from "@/components/smart-scroll-animation"
 import { HoverAnimation, FloatingAnimation } from "@/components/hover-animations"
 import Image from "next/image"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 
-// Componente para renderizar os widgets do Elfsight apenas no cliente
+// Componente para renderizar os widgets do Elfsight apenas quando visíveis
 function ElfsightIntegration() {
-  const [isClient, setIsClient] = useState(false)
+  const [shouldLoad, setShouldLoad] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    setIsClient(true)
-    
-    // Carregar o script do Elfsight
-    const script = document.createElement('script')
-    script.src = 'https://elfsightcdn.com/platform.js'
-    script.async = true
-    document.head.appendChild(script)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setShouldLoad(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: "100px" } // Carrega quando estiver a 100px de distância
+    )
 
-    return () => {
-      // Cleanup: remover o script quando o componente for desmontado
-      const existingScript = document.querySelector('script[src="https://elfsightcdn.com/platform.js"]')
-      if (existingScript) {
-        existingScript.remove()
-      }
+    if (containerRef.current) {
+      observer.observe(containerRef.current)
     }
+
+    return () => observer.disconnect()
   }, [])
 
-  if (!isClient) {
-    return (
-      <div className="w-full h-64 bg-[#FEE1CB] rounded-lg flex items-center justify-center">
-        <p className="text-[#371c13]">Carregando conteúdo...</p>
-      </div>
-    )
-  }
+  useEffect(() => {
+    if (shouldLoad) {
+      const script = document.createElement('script')
+      script.src = 'https://elfsightcdn.com/platform.js'
+      script.defer = true
+      document.head.appendChild(script)
+      
+      // Cleanup opcional: não remover o script imediatamente ao desmontar
+      // pois pode quebrar outros widgets se o usuário navegar rápido
+    }
+  }, [shouldLoad])
 
   return (
-    <div className="flex flex-col gap-8 w-full">
-      <div className="elfsight-app-e5203ce8-0504-4557-8ca9-11ef4568f042" data-elfsight-app-lazy></div>
-      <div className="elfsight-app-a1170993-c665-4d8e-9001-516b5cedb2ee" data-elfsight-app-lazy></div>
+    <div ref={containerRef} className="flex flex-col gap-8 w-full min-h-[400px]">
+      {shouldLoad ? (
+        <>
+          <div className="elfsight-app-e5203ce8-0504-4557-8ca9-11ef4568f042" data-elfsight-app-lazy></div>
+          <div className="elfsight-app-a1170993-c665-4d8e-9001-516b5cedb2ee" data-elfsight-app-lazy></div>
+        </>
+      ) : (
+        <div className="w-full h-96 bg-[#FEE1CB]/20 rounded-lg flex items-center justify-center animate-pulse">
+          <p className="text-[#371c13] font-light">Carregando avaliações...</p>
+        </div>
+      )}
     </div>
   )
 }
@@ -81,7 +94,9 @@ export default function HomePage() {
               filter: 'saturate(1.2) brightness(1.05)',
               objectPosition: 'center 30%'
             }}
+            sizes="(max-width: 768px) 100vw, 100vw"
             priority
+            quality={90}
           />
           <div className="absolute inset-0 bg-[#371c13] opacity-30"></div>
         </div>
@@ -107,7 +122,7 @@ export default function HomePage() {
             <HoverAnimation scale={1.05} y={-3}>
               <Button
                 size="lg"
-                className="bg-[#25D366] hover:bg-[#1DA851] text-white text-lg px-8 py-4 rounded-full"
+                className="bg-[#25D366] hover:bg-[#1DA851] text-white px-6 py-6 rounded-full"
                 asChild
               >
                 <a href="http://wa.me/5593991668420" target="_blank" rel="noopener noreferrer">
