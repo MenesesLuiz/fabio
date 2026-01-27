@@ -60,9 +60,13 @@ function ElfsightIntegration() {
   )
 }
 
+import { SiteHeader } from "@/components/site-header"
+
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#371c13] text-white">
+    <div className="min-h-screen bg-[#371c13] text-white overflow-x-hidden w-full">
+      <SiteHeader />
+      
       {/* Fixed WhatsApp Button */}
       <div className="fixed bottom-6 right-6 z-50">
         <FloatingAnimation duration={4} intensity={8}>
@@ -82,61 +86,73 @@ export default function HomePage() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 py-20 overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/imagem-fabio.webp"
-            alt="Dr. Fábio Dolzany"
-            fill
-            className="object-cover opacity-35"
-            style={{
-              filter: 'saturate(1.2) brightness(1.05)',
-              objectPosition: 'center 30%'
-            }}
-            sizes="(max-width: 768px) 100vw, 100vw"
-            priority
-            quality={90}
-          />
-          <div className="absolute inset-0 bg-[#371c13] opacity-30"></div>
-        </div>
-        
-        <div className="container mx-auto max-w-6xl text-center relative z-10">
-          <SmartScrollAnimation direction="up" delay={0.4}>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-balance leading-tight">
-              Dermatologia baseada em <span className="text-[#B27454]">ciência</span>,{" "}
-              <span className="text-[#B27454]">cuidado</span> e <span className="text-[#B27454]">responsabilidade</span>
-            </h1>
-          </SmartScrollAnimation>
+      <section className="relative min-h-[90vh] flex items-stretch lg:items-center px-4 pt-32 pb-0 lg:pb-20 overflow-hidden bg-[#371c13]">
+        <div className="container mx-auto max-w-7xl grid lg:grid-cols-[55%_45%] gap-12 items-center h-full sm:relative static">
+          
+          {/* Text Content */}
+          <div className="text-center lg:text-left relative z-10 order-1 lg:order-1 lg:pl-[5%]">
+            <SmartScrollAnimation direction="up" delay={0.4}>
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8 text-balance leading-tight">
+                Dermatologia baseada em <span className="text-[#B27454]">ciência</span>,{" "}
+                <span className="text-[#B27454]">cuidado</span> e <span className="text-[#B27454]">responsabilidade</span>
+              </h1>
+            </SmartScrollAnimation>
 
-          <SmartScrollAnimation direction="fade" delay={0.6}>
-            <div className="mb-8">
-              <h2 className="text-2xl md:text-3xl font-semibold mb-2">Dr. Fábio Dolzany</h2>
-              <p className="text-lg md:text-xl text-[#FEE1CB] font-light">
-                Dermatologista Clínico, Estético e Capilar • CRM-PA
-              </p>
-            </div>
-          </SmartScrollAnimation>
+            <SmartScrollAnimation direction="fade" delay={0.6}>
+              <div className="mb-10 space-y-5">
+                <h2 className="text-xl md:text-2xl font-semibold">Fábio Dolzany</h2>
+                <div className="space-y-2">
+                  <p className="text-base md:text-lg text-[#FEE1CB] font-light">
+                    Médico dermatologista
+                  </p>
+                  <p className="text-base md:text-lg text-[#FEE1CB] font-light">
+                    CRM-PA 14616 | RQE 9367
+                  </p>
+                  <p className="text-base md:text-lg text-[#FEE1CB] font-light">
+                    Dermatologia clínica, estética, capilar e cirúrgica
+                  </p>
+                </div>
+              </div>
+            </SmartScrollAnimation>
 
-          <SmartScrollAnimation direction="up" delay={0.8}>
-            <HoverAnimation scale={1.05} y={-3}>
-              <Button
-                size="lg"
-                className="bg-[#25D366] hover:bg-[#1DA851] text-white px-6 py-6 rounded-full"
-                asChild
-              >
-                <a href="http://wa.me/5593991668420" target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="w-5 h-5 mr-2" />
-                  Agende sua consulta pelo WhatsApp
-                </a>
-              </Button>
-            </HoverAnimation>
-          </SmartScrollAnimation>
+            <SmartScrollAnimation direction="up" delay={0.8}>
+              <div className="flex justify-center lg:justify-start">
+                <HoverAnimation scale={1.05} y={-3}>
+                  <Button
+                    size="lg"
+                    className="bg-[#25D366] hover:bg-[#1DA851] text-white px-6 py-6 rounded-full"
+                    asChild
+                  >
+                    <a href="http://wa.me/5593991668420" target="_blank" rel="noopener noreferrer">
+                      <MessageCircle className="w-5 h-5 mr-2" />
+                      Agende sua consulta pelo WhatsApp
+                    </a>
+                  </Button>
+                </HoverAnimation>
+              </div>
+            </SmartScrollAnimation>
+          </div>
+
+          {/* Image Content */}
+          <div className="flex justify-center lg:justify-end relative w-full z-0 order-2 lg:order-2 lg:absolute lg:left-auto lg:top-auto lg:-bottom-[130px] lg:right-[5%] lg:w-1/2 lg:h-[85vh] h-[50vh] items-end pointer-events-none mt-auto lg:mt-0">
+             <Image
+                src="/imagem-fabio.webp"
+                alt="Dr. Fábio Dolzany"
+                fill
+                className="object-contain object-bottom lg:object-right-bottom transform scale-110 lg:scale-95 origin-bottom"
+                style={{
+                  filter: 'saturate(1.2) brightness(1.05)',
+                }}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+                quality={95}
+              />
+          </div>
         </div>
       </section>
 
       {/* About Section */}
-      <section className="py-20 px-4 bg-[#FEE1CB]">
+      <section id="sobre" className="py-20 px-4 bg-[#FEE1CB]">
         <div className="container mx-auto max-w-6xl">
           <SmartScrollAnimation direction="up">
             <div className="text-center mb-16">
@@ -216,11 +232,11 @@ export default function HomePage() {
       </section>
 
       {/* Services Section */}
-      <section className="py-20 px-4 bg-[#FEE1CB]">
+      <section id="tratamentos" className="py-20 px-4 bg-[#FEE1CB]">
         <div className="container mx-auto max-w-6xl">
           <SmartScrollAnimation direction="up">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-[#371c13] mb-6">Áreas de Atuação</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-[#371c13] mb-6">O que você quer melhorar na sua pele?</h2>
               <p className="text-lg text-[#371c13] max-w-3xl mx-auto">
                 Tratamentos que realizo com base em evidência científica e protocolos individuais
               </p>
@@ -230,12 +246,14 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               "Acne (adulto e adolescente)",
-              "Rosácea e dermatites",
+              "Rosácea",
+              "Dermatite atópica, dermatite de contato e outras",
               "Melasma e hiperpigmentações",
               "Calvície e queda capilar",
               "Hidradenite supurativa",
               "Psoríase",
               "Micoses",
+              "Unha encravada",
               "Diagnóstico e tratamento de câncer de pele",
               "Dermatologia Estética",
               "Consulta investigativa completa",
@@ -260,7 +278,7 @@ export default function HomePage() {
       </section>
 
       {/* Avaliações Section */}
-      <section className="py-20 px-4">
+      <section id="avaliacoes" className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <SmartScrollAnimation direction="up">
             <div className="text-center mb-16">
@@ -299,14 +317,14 @@ export default function HomePage() {
         <div className="container mx-auto max-w-4xl text-center">
           <SmartScrollAnimation direction="up">
             <h2 className="text-3xl md:text-4xl font-bold text-[#371c13] mb-6 text-balance">
-              Você já tentou de tudo sozinho?
+              Tratamento dermatológico começa antes da prescrição.
             </h2>
           </SmartScrollAnimation>
 
           <SmartStaggeredAnimation staggerDelay={0.2} direction="fade">
             {[
-              "Talvez o que falta não seja mais um produto, e sim um plano real de tratamento. Se você sente que é hora de cuidar da sua pele com verdade, fale com a gente.",
-              "Aqui, cada caso é tratado com responsabilidade, embasamento e respeito."
+              "Começa com investigação, diagnóstico e decisão clínica bem feita.",
+              "Se você busca clareza sobre o que sua pele realmente precisa, fale com a equipe."
             ].map((text, index) => (
               <p key={index} className={`text-lg text-[#371c13] mb-8 ${index === 0 ? 'max-w-2xl mx-auto leading-relaxed' : ''}`}>
                 {text}
@@ -346,7 +364,7 @@ export default function HomePage() {
                     className="h-40 w-auto"
                   />
                 </div>
-                <p className="text-[#FEE1CB] italic mb-6">"Dermatologia com ciência, verdade e humanidade."</p>
+                <p className="text-[#FEE1CB] italic mb-6">"Nosso compromisso é com o paciente: diagnóstico bem feito, orientação clara e conduta baseada em evidência."</p>
 
                 <div className="flex justify-center md:justify-start items-center space-x-6">
                   <a
@@ -384,7 +402,7 @@ export default function HomePage() {
 
           <SmartScrollAnimation direction="up" delay={0.4}>
             <div className="mt-8 pt-8 border-t border-[#B27454]/20">
-              <p className="text-sm text-[#FEE1CB]">© 2024 Dr. Fábio Dolzany. Todos os direitos reservados.</p>
+              <p className="text-sm text-[#FEE1CB]">© 2026 Dr. Fábio Dolzany. Todos os direitos reservados.</p>
             </div>
           </SmartScrollAnimation>
         </div>
